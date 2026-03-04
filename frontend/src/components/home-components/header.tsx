@@ -1,10 +1,13 @@
 import { AuthContext } from "@/src/context/AuthContext";
+import { CartContext } from "@/src/context/CartContext";
 import { useContext } from "react";
 import { Button, StyleSheet, View } from "react-native";
 
 const Header = () => {
 
     const { logout } = useContext(AuthContext)
+    const { openCart } = useContext(CartContext)
+    console.log('header context: ', useContext(CartContext))
 
     return ( 
         <View style={styles.container}>
@@ -18,7 +21,8 @@ const Header = () => {
             <View style={{ flexDirection: 'row', display: 'flex', width: '50%', justifyContent: 'space-evenly' }}>
                 <View style={{ width: '40%' }}>
                     <Button 
-                    title="carrinho"
+                      title="carrinho"
+                      onPress={openCart}
                     />
                 </View>
                 <View style={{ width: '40%' }}>

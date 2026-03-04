@@ -1,12 +1,15 @@
+import ProductsContainer from "@/src/components/products-components/products-container";
 import Header from "../src/components/home-components/header";
-import { Text, View } from "react-native";
+import { View } from "react-native";
+import CartSheet from "../src/components/cart/cartSheet";
 
 const HomeScreen = () => {    
     return ( 
-        <View>
-            <Header />
-            <Text>home</Text>
-        </View>
+            <View style={{ flex: 1 }}>
+                <Header />
+                <ProductsContainer />
+                <CartSheet />
+            </View>
      );
 }
  
