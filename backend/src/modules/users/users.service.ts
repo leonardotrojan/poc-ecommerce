@@ -2,10 +2,12 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt'
+import { JwtService } from '@nestjs/jwt';
+import { emit } from 'process';
 
 @Injectable()
 export class UsersService {
-    constructor(private prisma: PrismaService) {}
+    constructor(private prisma: PrismaService, private jwtService: JwtService) {}
 
     async create(data: CreateUserDto) {
 
@@ -23,7 +25,8 @@ export class UsersService {
 
         const hashedPassword = await bcrypt.hash(data.password, 10)
 
-        return this.prisma.user.create({
+
+        const user = await this.prisma.user.create({
             data: {
                 name: data.name.trim(),
                 email: normalizedEmail,
@@ -39,6 +42,12 @@ export class UsersService {
                 createdAt: true
             }
         })
+
+        const payload = { sub: user.id, email: user.email }
+        const access_token = this.jwtService.sign(payload)
+
+        return { user, access_token }
+
     }
 
     async findByEmail(email: string) {
