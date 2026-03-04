@@ -1,4 +1,4 @@
-import SignUpForm from "@/src/components/signupForm";
+import SignUpForm from "../src/components/auth-components/signupForm";
 import { View } from "react-native";
 
 const SignUpScreen = () => {

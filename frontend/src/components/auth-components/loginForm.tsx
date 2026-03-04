@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
 import { Button, StyleSheet, TextInput, Text, View } from "react-native";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
 import { useRouter } from "expo-router";
-import { loginApi } from "../services/loginApi";
+import { loginApi } from "../../services/loginApi";
 
 const LoginForm = () => {
     const [email, setEmail] = useState('');

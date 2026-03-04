@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
 import { StyleSheet, TextInput, View, Text, TouchableOpacity, ActivityIndicator } from "react-native";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
 import { useRouter } from "expo-router";
-import { registerApi } from "../services/registerApi";
+import { registerApi } from "../../services/registerApi";
 
 const SignUpForm = () => {
 
