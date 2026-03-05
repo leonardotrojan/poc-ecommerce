@@ -21,7 +21,7 @@ export default function ProductsContainer() {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/products', {
+                const response = await axios.get('https://poc-ecommerce-kca8.onrender.com/products', {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }

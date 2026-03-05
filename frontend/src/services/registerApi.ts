@@ -1,6 +1,6 @@
 import axios from "axios";
 
 export const registerApi = axios.create({
-    baseURL: 'http://localhost:3000',
+    baseURL: 'https://poc-ecommerce-kca8.onrender.com',
     timeout: 5000,
 })

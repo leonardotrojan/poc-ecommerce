@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const API_URL = "http://localhost:3000"
+const API_URL = "https://poc-ecommerce-kca8.onrender.com"
 
 export const createOrder = async (token: string) => {
     const response = await fetch(`${API_URL}/orders`, {

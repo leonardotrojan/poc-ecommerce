@@ -43,7 +43,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
         try {
             const data = await getCart(token)
-            console.log("CART FROM BACKEND:", data)
             setCartItems(data.items)
         } catch (error) {
             console.log("Erro ao buscar carrinho:", error)
