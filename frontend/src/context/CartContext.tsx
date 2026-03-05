@@ -10,6 +10,7 @@ type CartContextType = {
     isCartOpen: boolean
     openCart: () => void
     closeCart: () => void
+    fetchCart: () => void
     incrementQuantity: (id: string) => void
     decrementQuantity: (id: string) => void
     removeItem: (id: string) => void
@@ -22,6 +23,7 @@ export const CartContext = createContext<CartContextType>({
     isCartOpen: false,
     openCart: () => {},
     closeCart: () => {},
+    fetchCart: () => {},
     incrementQuantity: (id) => {},
     decrementQuantity: (id) => {},
     removeItem: (id) => {}
@@ -101,7 +103,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
     return (
         <CartContext.Provider
-          value={{ cartItems, setCartItems, addToCart, isCartOpen, openCart, closeCart, incrementQuantity, decrementQuantity, removeItem }}
+          value={{ cartItems, setCartItems, addToCart, fetchCart, isCartOpen, openCart, closeCart, incrementQuantity, decrementQuantity, removeItem }}
         >
             {children}
         </CartContext.Provider>
