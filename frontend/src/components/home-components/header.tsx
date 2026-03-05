@@ -1,4 +1,4 @@
-import { View, Text, Button } from "react-native"
+import { View, Text, Button, StyleSheet } from "react-native"
 import { useContext } from "react"
 import { CartContext } from "@/src/context/CartContext"
 import { AuthContext } from "@/src/context/AuthContext"
@@ -16,9 +16,9 @@ export default function Header() {
   }
 
   return (
-    <View style={{ padding: 16, flexDirection: "row", justifyContent: "space-between" }}>
+    <View style={styles.container}>
       <Text style={{ fontSize: 20 }}>Loja</Text>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '50%' }}>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', gap: 10 }}>
           <Button title="histórico" onPress={redirectToHistory} />
           <Button title="logout" onPress={logout} color={'#ff5454'}/>
           <Button title="Carrinho" onPress={openCart} color={'#880aff'} />
@@ -26,3 +26,12 @@ export default function Header() {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 20, 
+    flexDirection: "row", 
+    justifyContent: "space-between",
+    alignItems: 'center'
+  }
+})

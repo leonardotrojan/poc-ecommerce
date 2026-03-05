@@ -40,7 +40,9 @@ export default function OrdersScreen() {
 
     return (
         <View>
-            <Button title="voltar" onPress={backToHome} />
+            <View style={{ height: 60, paddingTop: 20, backgroundColor: '#1d97fc' }}>
+              <Button title="voltar" onPress={backToHome} />
+            </View>
             <FlatList
                 data={orders}
                 keyExtractor={(item) => item.id}

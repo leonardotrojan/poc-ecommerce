@@ -72,7 +72,7 @@ export default function CartSheet() {
                     {cartItems.length > 0 && (
                         <Button title="Finalizar compra" onPress={handleCheckout} />
                     )}
-                    <View style={{ marginTop: 4 }}>
+                    <View style={{ marginTop: 4, marginBottom: 15 }}>
                         <Button title="Fechar" onPress={closeCart} />
                     </View>
                 </View>
