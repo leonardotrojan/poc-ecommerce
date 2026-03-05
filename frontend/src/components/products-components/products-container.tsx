@@ -38,6 +38,7 @@ export default function ProductsContainer() {
     }, [token])
 
     const handleAddToCart = (product: Product) => {
+        console.log("ADD ITEM", product.id)
         addToCart({ ...product, quantity: 1 })
     }
 

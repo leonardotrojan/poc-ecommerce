@@ -1,50 +1,20 @@
-import { AuthContext } from "@/src/context/AuthContext";
-import { CartContext } from "@/src/context/CartContext";
-import { useContext } from "react";
-import { Button, StyleSheet, View } from "react-native";
+import { View, Text, Button } from "react-native"
+import { useContext } from "react"
+import { CartContext } from "@/src/context/CartContext"
+import { AuthContext } from "@/src/context/AuthContext"
 
-const Header = () => {
+export default function Header() {
 
-    const { logout } = useContext(AuthContext)
-    const { openCart } = useContext(CartContext)
-    console.log('header context: ', useContext(CartContext))
+  const { openCart } = useContext(CartContext)
+  const { logout } = useContext(AuthContext)
 
-    return ( 
-        <View style={styles.container}>
-            <View style ={{ width: '40%' }}>
-                <Button
-                 title="sair"
-                 onPress={logout}
-                 color={'#ff6262'}
-                />
-            </View>
-            <View style={{ flexDirection: 'row', display: 'flex', width: '50%', justifyContent: 'space-evenly' }}>
-                <View style={{ width: '40%' }}>
-                    <Button 
-                      title="carrinho"
-                      onPress={openCart}
-                    />
-                </View>
-                <View style={{ width: '40%' }}>
-                    <Button 
-                    title="histórico"
-                    />
-                </View>
-            </View>
-        </View>
-     );
+  return (
+    <View style={{ padding: 16, flexDirection: "row", justifyContent: "space-between" }}>
+      <Text style={{ fontSize: 20 }}>Loja</Text>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '50%' }}>
+          <Button title="logout" onPress={logout}/>
+          <Button title="Carrinho" onPress={openCart} />
+      </View>
+    </View>
+  )
 }
-
-const styles: any = StyleSheet.create({
-    container: {
-        width: '100%', 
-        height: 44, 
-        padding: 2, 
-        borderWidth: 2, 
-        borderColor: '#b9b9b9', 
-        flexDirection: 'row', 
-        justifyContent: 'space-between'
-    }
-})
- 
-export default Header;

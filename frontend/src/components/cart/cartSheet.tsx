@@ -4,7 +4,14 @@ import { Modal, View, Text, FlatList, Button, StyleSheet } from "react-native";
 import CartItemCard from "./cart-item-card";
 
 export default function CartSheet() {
-    const { cartItems, isCartOpen, closeCart, incrementQuantity, decrementQuantity, removeItem } = useContext(CartContext)
+    const { 
+        cartItems, 
+        isCartOpen, 
+        closeCart, 
+        incrementQuantity,
+        decrementQuantity,
+        removeItem
+    } = useContext(CartContext)
 
     return (
         <Modal

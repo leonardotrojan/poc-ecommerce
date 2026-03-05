@@ -1,8 +1,11 @@
-import { ReactNode, createContext, useState } from "react"
+import { ReactNode, createContext, useContext, useState } from "react"
 import type { CartItem } from "../types/cart-item"
+import { addItemToCart, getCart, updateCartItem, removeCartItem } from "../services/cartApi"
+import { AuthContext } from "./AuthContext"
 
 type CartContextType = {
     cartItems: CartItem[]
+    setCartItems: React.Dispatch<React.SetStateAction<CartItem[]>>
     addToCart: (item: CartItem) => void
     isCartOpen: boolean
     openCart: () => void
@@ -14,6 +17,7 @@ type CartContextType = {
 
 export const CartContext = createContext<CartContextType>({
     cartItems: [],
+    setCartItems: () => {},
     addToCart: () => {},
     isCartOpen: false,
     openCart: () => {},
@@ -24,55 +28,80 @@ export const CartContext = createContext<CartContextType>({
 })
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
+
+    console.log("Cartprovider render")
+
+    const {token} = useContext(AuthContext)
+
     const [cartItems, setCartItems] = useState<CartItem[]>([])
     const [isCartOpen, setIsCartOpen] = useState(false)
 
-    const addToCart = (item: CartItem) => {
-        setCartItems((prev) => {
-            const existing = prev.find((i) => i.id === item.id)
-            if (existing) {
-                return prev.map((i) =>
-                    i.id === item.id ? { ...i, quantity: i.quantity + item.quantity } : i
-                )
-            } else {
-                return [...prev, item]
-            }
-        })
-        setIsCartOpen(true)
+    const fetchCart = async () => {
+        if (!token) return
+
+        try {
+            const data = await getCart(token)
+            console.log("CART FROM BACKEND:", data)
+            setCartItems(data.items)
+        } catch (error) {
+            console.log("Erro ao buscar carrinho:", error)
+        }
     }
 
-    const openCart = () => {
-        console.log('abrindo cart')
+    const addToCart = async (item: CartItem) => {
+    if (!token) return
+
+    try {
+        await addItemToCart(token, item.id)
+        console.log("ADD CART", item.id)
+        await fetchCart()
         setIsCartOpen(true)
-        console.log('cart aberto')
+    } catch (error) {
+        console.log("Erro ao adicionar item:", error)
+    }
+}
+
+    const openCart = () => {
+        setIsCartOpen(true)
     }
     const closeCart = () => setIsCartOpen(false)
 
-    const incrementQuantity = (id: string) => {
-        setCartItems(prev =>
-            prev.map(item =>
-                item.id === id ? { ...item, quantity: item.quantity + 1 } : item
-            )
-        )
+    const incrementQuantity = async (id: string) => {
+    if (!token) return
+
+    const item = cartItems.find(i => i.id === id)
+    if (!item) return
+
+    await updateCartItem(token, id, item.quantity + 1)
+    fetchCart()
+}
+
+    const decrementQuantity = async (id: string) => {
+    if (!token) return
+
+    const item = cartItems.find(i => i.id === id)
+    if (!item) return
+
+    if (item.quantity === 1) {
+        await removeCartItem(token, id)
+    } else {
+        await updateCartItem(token, id, item.quantity - 1)
     }
 
-    const decrementQuantity = (id: string) => {
-        setCartItems(prev => 
-            prev
-                .map(item =>
-                    item.id === id ? { ...item, quantity: item.quantity - 1 } : item
-                )
-                .filter(item => item.quantity > 0)
-        )
-    }
+    fetchCart()
+}
 
-    const removeItem = (id: string) => {
-        setCartItems(prev => prev.filter(item => item.id !== id))
-    }
+    const removeItem = async (id: string) => {
+    if (!token) return
+
+    await removeCartItem(token, id)
+    fetchCart()
+}
+
 
     return (
         <CartContext.Provider
-          value={{ cartItems, addToCart, isCartOpen, openCart, closeCart, incrementQuantity, decrementQuantity, removeItem }}
+          value={{ cartItems, setCartItems, addToCart, isCartOpen, openCart, closeCart, incrementQuantity, decrementQuantity, removeItem }}
         >
             {children}
         </CartContext.Provider>
